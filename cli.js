@@ -2,6 +2,7 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import async from 'async'
+import queryString from 'query-string'
 import parsePage from './src/parsePage.js'
 import loadArticle from './src/loadArticle.js'
 
@@ -9,7 +10,13 @@ const config = yaml.load(fs.readFileSync('conf.yaml'))
 
 let result = {}
 async.each(config.tags, (tag, done) => {
-  fetch('https://meinbezirk.at/tag/' + tag)
+  let url = 'https://meinbezirk.at/tag/' + tag
+
+  if (config.params) {
+    url += '?' + queryString.stringify(config.params)
+  }
+
+  fetch(url)
     .then(req => req.text())
     .then(body => parsePage(body))
     .then(list => {

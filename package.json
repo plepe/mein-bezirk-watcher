@@ -3,6 +3,7 @@
   "dependencies": {
     "async": "^3.2.6",
     "js-yaml": "^4.1.0",
-    "jsdom": "^25.0.0"
+    "jsdom": "^25.0.0",
+    "query-string": "^9.1.0"
   }
 }
