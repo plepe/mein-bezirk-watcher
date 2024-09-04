@@ -34,7 +34,13 @@ async.each(config.tags, (tag, done) => {
   }
 
   result = Object.values(result)
-  async.each(result, (item, done) => loadArticle(item, done).then(() => done()), printResult)
+  async.map(result, (item, done) => loadArticle(item, done)
+    .then((err, _item) => {
+      item[item.id] = _item
+      done()
+    }),
+    printResult
+  )
 })
 
 function printResult (err) {
