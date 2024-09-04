@@ -3,6 +3,7 @@ import fs from 'fs'
 import yaml from 'js-yaml'
 import async from 'async'
 import parsePage from './src/parsePage.js'
+import loadArticle from './src/loadArticle.js'
 
 const config = yaml.load(fs.readFileSync('conf.yaml'))
 
@@ -26,5 +27,15 @@ async.each(config.tags, (tag, done) => {
   }
 
   result = Object.values(result)
-  console.log(JSON.stringify(result, null, '   '))
+  async.each(result, (item, done) => loadArticle(item, done).then(() => done()), printResult)
 })
+
+function printResult (err) {
+  if (err) {
+    console.error(err)
+  }
+
+  result = result.sort((a, b) => a.date > b.date ? -1 : 1)
+
+  console.log(JSON.stringify(result, null, '   '))
+}
