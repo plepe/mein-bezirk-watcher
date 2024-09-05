@@ -15,7 +15,7 @@ function run () {
   let result = {}
 
   async.each(config.tags, (tag, done) => {
-    let url = 'https://meinbezirk.at/tag/' + tag
+    let url = 'https://meinbezirk.at/tag/' + encodeURIComponent(tag)
 
     if (config.params) {
       url += '?' + queryString.stringify(config.params)
