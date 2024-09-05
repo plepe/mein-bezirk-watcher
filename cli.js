@@ -56,6 +56,10 @@ function printResult (err, result) {
   result = Object.values(result)
   result = result.sort((a, b) => a.date > b.date ? 1 : -1)
 
-  console.log(JSON.stringify(result, null, '   '))
+  //console.log(JSON.stringify(result, null, '   '))
+  result.forEach(item => {
+    console.log('* ' + item.title + '\n  ' + item.href + '\n  ' + item.date + '\n')
+  })
+
   cache.close()
 }
