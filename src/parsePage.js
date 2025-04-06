@@ -8,7 +8,7 @@ export default function parsePage (body) {
     const result = Array.from(articles).map(article => {
       const item = {
         id: article.getAttribute('data-article-id'),
-        href: article.querySelector('a').getAttribute('href'),
+        href: 'https://meinbezirk.at' + article.querySelector('a').getAttribute('href'),
         title: (article.querySelector('h3 .kicker') ? article.querySelector('h3 .kicker').textContent.trim() + ': ' : '') + article.querySelector('h3 a').lastChild.textContent.trim()
       }
 
