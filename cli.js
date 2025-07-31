@@ -2,10 +2,9 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import async from 'async'
-import queryString from 'query-string'
-import parsePage from './src/parsePage.js'
 import loadArticle from './src/loadArticle.js'
 import cache from './src/cache.js'
+import loadTagArticles from './src/loadTagArticles.js'
 
 const config = yaml.load(fs.readFileSync('conf.yaml'))
 
@@ -15,24 +14,15 @@ function run () {
   let result = {}
 
   async.each(config.tags, (tag, done) => {
-    let url = 'https://meinbezirk.at/tag/' + encodeURIComponent(tag)
-
-    if (config.params) {
-      url += '?' + queryString.stringify(config.params)
-    }
-
-    fetch(url)
-      .then(req => req.text())
-      .then(body => parsePage(body))
-      .then(list => {
-        list.forEach(item => {
-          if (!(item.id in result)) {
-            result[item.id] = item
-          }
-        })
-
-        done()
+    loadTagArticles(tag, config, (err, list) => {
+      list.forEach(item => {
+        if (!(item.id in result)) {
+          result[item.id] = item
+        }
       })
+
+      done()
+    })
   }, (err) => {
     if (err) {
       console.error(err)
