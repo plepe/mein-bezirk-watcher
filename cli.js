@@ -4,26 +4,14 @@ import yaml from 'js-yaml'
 import async from 'async'
 import loadArticle from './src/loadArticle.js'
 import cache from './src/cache.js'
-import loadTagArticles from './src/loadTagArticles.js'
+import loadTagsArticles from './src/loadTagsArticles.js'
 
 const config = yaml.load(fs.readFileSync('conf.yaml'))
 
 cache.open().then(() => run())
 
 function run () {
-  let result = {}
-
-  async.each(config.tags, (tag, done) => {
-    loadTagArticles(tag, config, (err, list) => {
-      list.forEach(item => {
-        if (!(item.id in result)) {
-          result[item.id] = item
-        }
-      })
-
-      done()
-    })
-  }, (err) => {
+  loadTagsArticles(config.tags, config, (err, result) => {
     if (err) {
       console.error(err)
     }
