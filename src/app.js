@@ -1,3 +1,6 @@
+import moment from 'moment'
+import 'moment/locale/de'
+
 let form
 let result
 
@@ -27,7 +30,7 @@ function loadResults () {
   fetch(url)
     .then(req => req.json())
     .then(data => {
-      data.forEach(entry => {
+      data.reverse().forEach(entry => {
         showEntry(entry)
       })
     })
@@ -42,6 +45,11 @@ function showEntry (entry) {
   a.appendChild(document.createTextNode(entry.title))
 
   node.appendChild(a)
+
+  const dateDisplay = document.createElement('span')
+  dateDisplay.className = 'date'
+  dateDisplay.appendChild(document.createTextNode(moment(entry.date).format('lll')))
+  node.appendChild(dateDisplay)
 
   result.appendChild(node)
 }
