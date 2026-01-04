@@ -1,29 +1,17 @@
 #!/usr/bin/env node
 import fs from 'fs'
 import yaml from 'js-yaml'
-import async from 'async'
-import loadArticle from './src/loadArticle.js'
 import cache from './src/cache.js'
-import loadTagsArticles from './src/loadTagsArticles.js'
+import loadTagsArticlesDetails from './src/loadTagsArticlesDetails.js'
 
 const config = yaml.load(fs.readFileSync('conf.yaml'))
 
 cache.open().then(() => run())
 
 function run () {
-  loadTagsArticles(config.tags, config, (err, result) => {
-    if (err) {
-      console.error(err)
-    }
-
-    async.map(result,
-      (item, done) => {
-        loadArticle(item)
-          .then(_item => done(null, _item))
-      },
-      (err, result) => printResult(err, result)
-    )
-  })
+  loadTagsArticlesDetails(config.tags, config,
+    (err, result) => printResult(err, result)
+  )
 }
 
 function printResult (err, result) {
