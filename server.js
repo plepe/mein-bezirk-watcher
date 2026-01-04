@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import fs from 'fs'
 import http from 'http'
 import { ArgumentParser } from 'argparse'
 import url from 'url'
@@ -39,7 +40,21 @@ function handleRequest (request, response) {
 
   request.on('end', () => {
     const parameter = url.parse(request.url, true)
-    const tags = parameter.query.tags.split(',')
+
+    if (parameter.pathname !== '/') {
+      if (parameter.pathname.match(/^\/[a-z0-9\.]+\.(html|css)$/)) {
+        return serveFile(parameter.pathname, response)
+      }
+      if (parameter.pathname.match(/^\/dist\/app.js$/)) {
+        return serveFile(parameter.pathname, response)
+      }
+
+      response.writeHead(404, {
+      })
+      return response.end('File not found')
+    }
+
+    const tags = parameter.query.tags ? parameter.query.tags.split(',') : []
     loadTagsArticlesDetails(tags, parameter.query, (err, result) => {
       if (err) {
         return handleResult(err)
@@ -73,5 +88,28 @@ function handleRequest (request, response) {
       })
       response.end(JSON.stringify(result, null, '  '))
     }
+  })
+}
+
+const contentTypes = {
+  js: 'text/javascript',
+  html: 'text/html',
+  css: 'text/css',
+}
+
+function serveFile (file, response) {
+  fs.readFile('.' + file, (err, body) => {
+    if (err) {
+      response.writeHead(404, {
+      })
+      return response.end(err.message)
+    }
+
+    const ext = file.match(/\.([a-z]*)$/)[1]
+    response.writeHead(200, {
+      'Content-Type': (contentTypes[ext] ?? 'text/plain') + ';chartset=utf-8'
+    })
+
+    response.end(body)
   })
 }
