@@ -1,6 +1,10 @@
 {
   "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
+    "argparse": "^2.0.1",
     "async": "^3.2.6",
     "js-yaml": "^4.1.0",
     "jsdom": "^25.0.0",
