@@ -69,6 +69,9 @@ function handleRequest (request, response) {
         })
       }
 
+      result = Object.values(result)
+      result = result.sort((a, b) => a.date > b.date ? 1 : -1)
+
       handleResult(err, result)
     })
 
