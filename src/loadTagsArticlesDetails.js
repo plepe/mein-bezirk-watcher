@@ -4,7 +4,6 @@ import loadTagsArticles from './loadTagsArticles.js'
 
 export default function loadTagsArticlesDetails (tags, config, callback) {
   loadTagsArticles(tags, config, (err, result) => {
-        console.log(err, result)
     if (err) {
       console.error(err)
     }

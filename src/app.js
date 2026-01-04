@@ -9,8 +9,6 @@ window.onload = () => {
 }
 
 function loadResults () {
-  console.log(form.elements)
-
   const parameter = {
     tags: form.elements.tags.value,
     loc: form.elements.loc.value
