@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "mkdir -p dist && browserify src/app.js -o dist/app.js",
+    "watch": "mkdir -p dist && watchify --debug src/app.js -o dist/app.js -v"
   },
   "dependencies": {
     "argparse": "^2.0.1",
@@ -10,5 +12,9 @@
     "jsdom": "^25.0.0",
     "lokijs": "^1.5.12",
     "query-string": "^9.1.0"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.1",
+    "watchify": "^4.0.0"
   }
 }
