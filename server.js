@@ -55,7 +55,7 @@ function handleRequest (request, response) {
     }
 
     const tags = parameter.query.tags ? parameter.query.tags.split(',') : []
-    loadTagsArticlesDetails(tags, parameter.query, (err, result) => {
+    loadTagsArticlesDetails(tags, { params: parameter.query }, (err, result) => {
       if (err) {
         return handleResult(err)
       }
