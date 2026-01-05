@@ -16,8 +16,8 @@ window.onload = () => {
   if (location.search) {
     const parameter = queryString.parse(location.search)
 
-    form.elements.loc.value = parameter.loc
-    form.elements.tags.value = parameter.tags
+    form.elements.loc.value = parameter.loc || ''
+    form.elements.tags.value = parameter.tags || ''
   }
 
   window.addEventListener('popstate', urlChange)
@@ -28,8 +28,8 @@ window.onload = () => {
 function urlChange () {
   const parameter = queryString.parse(location.search)
 
-  form.elements.loc.value = parameter.loc
-  form.elements.tags.value = parameter.tags
+  form.elements.loc.value = parameter.loc || ''
+  form.elements.tags.value = parameter.tags || ''
 
   loadResults()
 }
