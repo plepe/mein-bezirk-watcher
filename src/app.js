@@ -40,11 +40,6 @@ function formChange () {
     loc: form.elements.loc.value
   }
 
-  result.innerHTML = ''
-  if (parameter.tags === '') {
-    return
-  }
-
   let search = '?tags=' + encodeURIComponent(parameter.tags)
   if (parameter.loc) {
     search += '&loc=' + encodeURIComponent(parameter.loc)
@@ -63,6 +58,7 @@ function loadResults () {
 
   result.innerHTML = 'lade Ergebnisse ...'
   if (parameter.tags === '') {
+    result.innerHTML = ''
     return
   }
 
