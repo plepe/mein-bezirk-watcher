@@ -58,7 +58,7 @@ function loadResults () {
     loc: form.elements.loc.value
   }
 
-  result.innerHTML = ''
+  result.innerHTML = 'lade Ergebnisse ...'
   if (parameter.tags === '') {
     return
   }
@@ -71,6 +71,8 @@ function loadResults () {
   fetch(url)
     .then(req => req.json())
     .then(data => {
+      result.innerHTML = ''
+
       data.reverse().forEach(entry => {
         showEntry(entry)
       })
