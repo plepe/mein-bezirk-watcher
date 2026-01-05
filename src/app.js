@@ -83,6 +83,7 @@ function showEntry (entry) {
   const node = document.createElement('li')
 
   const a = document.createElement('a')
+  a.className = 'title'
   a.href = entry.href
   a.target = '_blank'
   a.appendChild(document.createTextNode(entry.title))
