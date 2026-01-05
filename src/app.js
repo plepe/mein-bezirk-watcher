@@ -63,7 +63,7 @@ function loadResults () {
     return
   }
 
-  let url = '.?tags=' + encodeURIComponent(parameter.tags)
+  let url = './query?tags=' + encodeURIComponent(parameter.tags)
   if (parameter.loc) {
     url += '&loc=' + encodeURIComponent(parameter.loc)
   }

@@ -41,7 +41,10 @@ function handleRequest (request, response) {
   request.on('end', () => {
     const parameter = url.parse(request.url, true)
 
-    if (parameter.pathname !== '/') {
+    if (parameter.pathname !== '/query') {
+      if (parameter.pathname === '/') {
+        return serveFile('/index.html', response)
+      }
       if (parameter.pathname.match(/^\/[a-z0-9\.]+\.(html|css)$/)) {
         return serveFile(parameter.pathname, response)
       }
