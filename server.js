@@ -45,7 +45,7 @@ function handleRequest (request, response) {
       if (parameter.pathname === '/') {
         return serveFile('/index.html', response)
       }
-      if (parameter.pathname.match(/^\/[a-z0-9\.]+\.(html|css)$/)) {
+      if (parameter.pathname.match(/^\/[a-z0-9\.]+\.(html|css|png|jpg|gif)$/)) {
         return serveFile(parameter.pathname, response)
       }
       if (parameter.pathname.match(/^\/dist\/app.js$/)) {
@@ -101,6 +101,9 @@ const contentTypes = {
   js: 'text/javascript',
   html: 'text/html',
   css: 'text/css',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  gif: 'image/gif',
 }
 
 function serveFile (file, response) {
