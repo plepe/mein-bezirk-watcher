@@ -1,9 +1,12 @@
 import moment from 'moment'
 import 'moment/locale/de'
 import queryString from 'query-string'
+import Events from 'events'
 
 let form
 let result
+
+global.app = new Events()
 
 window.onload = () => {
   result = document.querySelector('#result')
@@ -94,6 +97,8 @@ function showEntry (entry) {
   dateDisplay.className = 'date'
   dateDisplay.appendChild(document.createTextNode(moment(entry.date).format('lll')))
   node.appendChild(dateDisplay)
+
+  app.emit('showEntry', entry, node)
 
   result.appendChild(node)
 }

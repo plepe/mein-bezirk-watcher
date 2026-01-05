@@ -45,7 +45,7 @@ function handleRequest (request, response) {
       if (parameter.pathname === '/') {
         return serveFile('/index.html', response)
       }
-      if (parameter.pathname.match(/^\/[a-z0-9\.]+\.(html|css|png|jpg|gif)$/)) {
+      if (parameter.pathname.match(/^\/[a-z0-9\.]+\.(html|css|js|png|jpg|gif)$/)) {
         return serveFile(parameter.pathname, response)
       }
       if (parameter.pathname.match(/^\/dist\/app.js$/)) {
