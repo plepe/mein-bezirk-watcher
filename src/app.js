@@ -1,5 +1,6 @@
 import moment from 'moment'
 import 'moment/locale/de'
+import queryString from 'query-string'
 
 let form
 let result
@@ -7,7 +8,47 @@ let result
 window.onload = () => {
   result = document.querySelector('#result')
   form = document.querySelector('form')
-  form.onchange = loadResults
+  form.onchange = formChange
+
+  if (location.search) {
+    const parameter = queryString.parse(location.search)
+
+    form.elements.loc.value = parameter.loc
+    form.elements.tags.value = parameter.tags
+  }
+
+  window.addEventListener('popstate', urlChange)
+
+  loadResults()
+}
+
+function urlChange () {
+  const parameter = queryString.parse(location.search)
+
+  form.elements.loc.value = parameter.loc
+  form.elements.tags.value = parameter.tags
+
+  loadResults()
+}
+
+function formChange () {
+  const parameter = {
+    tags: form.elements.tags.value,
+    loc: form.elements.loc.value
+  }
+
+  result.innerHTML = ''
+  if (parameter.tags === '') {
+    return
+  }
+
+  let search = '?tags=' + encodeURIComponent(parameter.tags)
+  if (parameter.loc) {
+    search += '&loc=' + encodeURIComponent(parameter.loc)
+  }
+
+  history.pushState(parameter, '', search)
+
   loadResults()
 }
 
